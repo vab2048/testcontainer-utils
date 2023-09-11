@@ -1,0 +1,34 @@
+plugins {
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.flyway)
+    id 'java'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    // Dependency versions are largely managed by these 'platform' (BOM) definitions.
+    implementation platform(libs.spring.boot.bom)
+
+    implementation libs.bundles.apache.commons
+
+    implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.data.jdbc
+
+    implementation libs.postgresql
+
+    testImplementation libs.spring.boot.starter.test
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation libs.testContainers
+    testImplementation libs.testContainers.kafka
+    testImplementation libs.testContainers.postgresql
+    testImplementation libs.testContainers.jupiter.extension
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
